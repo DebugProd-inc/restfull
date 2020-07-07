@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-flask/
-=======
 .vscode
-flask
+flask/
+#for directory it is true^
 __pycache__
->>>>>>> 09c6488d59ba3c99d8a615219eac4da531d64b19
