@@ -1,4 +1,3 @@
-.vscode
+.vscode/
 flask/
-#for directory it is true^
-__pycache__
+__pycache__/
