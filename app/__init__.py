@@ -12,4 +12,4 @@ def create_app(config_class=Config):  # noqa
     return app
 
 
-from router import router
+from app import router
