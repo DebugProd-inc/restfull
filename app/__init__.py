@@ -11,4 +11,5 @@ app.register_blueprint(api_bp, url_prefix='/api')  # noqa
 db = SQLAlchemy(app)  # noqa
 migrate = Migrate(app, db)  # noqa
 
-from app import router, models
+from app import router
+from app.models import user
