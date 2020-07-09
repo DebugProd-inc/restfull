@@ -1,3 +1,4 @@
+from flask import url_for
 from app import db
 
 
@@ -9,3 +10,22 @@ class User(db.Model):
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
+
+    def to_dict(self, include_email=False):
+        data = {
+            'id': self.id,
+            'username': self.username,
+            '_links': {
+                'self': url_for('api.get_user', id=self.id),
+            }
+        }
+        if include_email:
+            data['email'] = self.email
+        return data
+
+    def from_dict(self, data, new_user=False):
+        for field in ['username', 'email']:
+            if field in data:
+                setattr(self, field, data[field])
+        if new_user and 'password' in data:
+            self.set_password(data['password'])
