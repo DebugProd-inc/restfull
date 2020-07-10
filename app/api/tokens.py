@@ -1,16 +1,29 @@
-# Processing markers
+from flask import jsonify, g
+from app import db
+from app.api import bp
+from app.api.auth import basic_auth
+from app.api.auth import token_auth
 
+
+@bp.route('/tokens', methods=['GET', 'POST'])
+@basic_auth.login_required
 def get_token():
-    pass
+    token = g.current_user.get_token()
+    db.session.commit()
+    return jsonify({'token': token})
 
 
-def update_token():
-    pass
-
-
+@bp.route('/tokens', methods=['DELETE'])
+@token_auth.login_required
 def revoke_token():
-    pass
+    g.current_user.revoke_token()
+    db.session.commit()
+    return '', 204
 
 
+@bp.route('/tokens', methods=['PUT'])
+@basic_auth.login_required
 def get_refresh_token():
-    pass
+    token = g.current_user.get_refresh_token()
+    db.session.commit()
+    return jsonify({'token': token})
