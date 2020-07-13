@@ -1,4 +1,3 @@
-# from __future__ import division
 import numpy as np
 import random
 import scipy
@@ -31,16 +30,16 @@ x3 = np.array([
 implementation_values = np.row_stack((x1, x2, x3))
 
 
-def center(n, x_i):
-    result = np.zeros(n)
+def center(x_i):
+    result = np.zeros(len(x_i))
     i = 0
     for row in x_i:
-        result[i] += sum(row)/n
+        result[i] += sum(row)/len(x_i)
         i += 1
     return result
 
 
-x_c = center(len(implementation_values), implementation_values)
+X_C = center(implementation_values)
 
 
 def mahalanob(x_i):
@@ -52,12 +51,23 @@ def mahalanob(x_i):
     i = 0
     for i in range(0, len(x_i[0])):
         result[i] = scipy.spatial.distance.mahalanobis(
-            x_i[:, i], x_c, invers_cov_matrix
+            x_i[:, i], X_C, invers_cov_matrix
             )
         i += 1
     return result
 
 
-mahalanob_test = mahalanob(implementation_values)
+def getting_quantile(dj):
+    confidence_probability = float(input())
+    return np.quantile(dj, confidence_probability)
 
-print("M_D = ", mahalanob_test)
+
+MU_MAX = getting_quantile(mahalanob(implementation_values))
+
+
+def functional_check(distance):
+    if distance <= MU_MAX:
+        return True
+
+    else:
+        return False
