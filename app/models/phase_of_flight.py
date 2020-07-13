@@ -1,4 +1,5 @@
 from app import db
+from app.models.duration_of_phase import duration_of_phase
 
 
 class PhaseOfFlight(db.Model):

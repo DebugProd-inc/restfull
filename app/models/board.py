@@ -6,5 +6,5 @@ class Board(db.Model):
     id_model = db.Column(db.Integer, db.ForeignKey("model.id"))
     model = db.relationship("Model")
     year_of_manufacture = db.Column(db.Integer)
-    system = db.relationship("System")
+    system = db.relationship("Subsystem")
     flight = db.relationship("Flight")
