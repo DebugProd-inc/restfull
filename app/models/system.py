@@ -3,9 +3,8 @@ from app import db
 
 
 class System(db.Model):
-    __tablename__ = "systems"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
-    id_board = db.Column(db.Integer, db.ForeignKey("boards.id"))
+    id_board = db.Column(db.Integer, db.ForeignKey("board.id"))
     board = db.relationship("Board")
-    parameters = db.relationship("Parameter")
+    parameter = db.relationship("Parameter")
