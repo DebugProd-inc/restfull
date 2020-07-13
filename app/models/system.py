@@ -8,3 +8,4 @@ class System(db.Model):
     name = db.Column(db.String)
     id_board = db.Column(db.Integer, db.ForeignKey("boards.id"))
     board = db.relationship("Board")
+    parameters = db.relationship("Parameter")

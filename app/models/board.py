@@ -8,3 +8,5 @@ class Board(db.Model):
     id_model = db.Column(db.Integer, db.ForeignKey("models.id"))
     model = db.relationship("Model")
     year_of_manufacture = db.Column(db.Integer)
+    systems = db.relationship("System")
+    flight = db.relationship("Flight")
