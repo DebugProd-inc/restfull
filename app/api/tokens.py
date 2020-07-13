@@ -22,7 +22,7 @@ def revoke_token():
 
 
 @bp.route('/tokens', methods=['PUT'])
-@basic_auth.login_required
+@token_auth.login_required
 def get_refresh_token():
     token = g.current_user.get_refresh_token()
     db.session.commit()

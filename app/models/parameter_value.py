@@ -1,4 +1,3 @@
-from flask import url_for
 from app import db
 
 
@@ -7,6 +6,6 @@ class ParameterValue(db.Model):
     id_parameter = db.Column(db.Integer, db.ForeignKey("parameter.id"))
     parameter = db.relationship("Parameter")
     time = db.Column(db.Time)
-    value= db.Column(db.Float)
+    value = db.Column(db.Float)
     id_flight = db.Column(db.Integer, db.ForeignKey("flight.id"))
     flight = db.relationship("Flight")

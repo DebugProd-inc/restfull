@@ -26,7 +26,8 @@ class User(PaginatedAPIMixin, db.Model):
 
     def get_token(self, expires_in=3600):
         now = datetime.utcnow()
-        not_rotten = self.token_expiration > now + timedelta(seconds=60)
+        if self.token_expiration:
+            not_rotten = self.token_expiration > now + timedelta(seconds=60)
         if self.token and not_rotten:
             return self.token
         self.token = base64.b64encode(os.urandom(24)).decode('utf-8')
