@@ -3,4 +3,7 @@ from app import db
 
 
 class Parameter(db.Model):
-    pass
+    __tablename__ = "Parameters"
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String)
+    
