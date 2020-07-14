@@ -20,8 +20,6 @@ class Board(PaginatedAPIMixin, db.Model):
             'id_model': self.id_model,
             'year_of_manufacture': self.year_of_manufacture,
             '_links': {
-                # May break due to id, cause it's type is db.String
-                # Yes, we must change id to registrarion_number
                 'self': url_for(
                     'api.get_board',
                     registration_number=self.registration_number)
