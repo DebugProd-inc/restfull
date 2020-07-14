@@ -21,8 +21,19 @@ def create_user():
     response = jsonify(user.to_dict())
     response.status_code = 201
     response.headers['Location'] = url_for('api.get_user', id=user.id)
-    response.headers['Access-Control-Allow-Origin'] = '*'
-    response.headers["Access-Control-Allow-Methods"] = "GET, PUT, POST, DELETE"
-    response.headers["Access-Control-Allow-Headers"] = \
-        "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+    # response.headers['Access-Control-Allow-Origin'] = '*'
+    # response.headers["Access-Control-Allow-Methods"] = "GET, PUT, POST, DELETE"
+    # response.headers["Access-Control-Allow-Headers"] = \
+    # "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+    return response
+
+
+@bp.after_request
+def after_request(response):
+    white_origin = ['http://localhost:8080',
+                    'https://debug-product-test.web.app/']
+    if request.headers['Origin'] in white_origin:
+        response.headers['Access-Control-Allow-Origin'] = request.headers['Origin']
+        response.headers['Access-Control-Allow-Methods'] = 'PUT,GET,POST,DELETE'
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type,Authorization'
     return response
