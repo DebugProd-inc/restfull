@@ -16,7 +16,7 @@ class User(PaginatedAPIMixin, db.Model):
     token_expiration = db.Column(db.DateTime)
 
     def __repr__(self):
-        return '<User {}>'.format(self.username)
+        return f'<User {self.username}>'
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)

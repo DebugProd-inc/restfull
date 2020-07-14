@@ -8,3 +8,6 @@ class Board(db.Model):
     year_of_manufacture = db.Column(db.Integer)
     system = db.relationship("Subsystem")
     flight = db.relationship("Flight")
+
+    def __repr__(self):
+        return f'<Board {self.registration_number}>'

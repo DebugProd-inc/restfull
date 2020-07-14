@@ -1,6 +1,6 @@
 from app import db
 
-
+# auxiliary table
 duration_of_phase = db.Table(
     "duration_of_phase",
     db.Column("id_flight", db.Integer, db.ForeignKey("flight.id")),

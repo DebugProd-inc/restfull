@@ -8,3 +8,6 @@ class PhaseOfFlight(db.Model):
     flight = db.relationship(
         "Flight", secondary=duration_of_phase, back_populates="phase_of_flight"
     )
+
+    def __repr__(self):
+        return f'<PhaseOfFlight {self.name}>'
