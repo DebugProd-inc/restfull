@@ -31,7 +31,7 @@ def create_user():
 @bp.before_request
 def before_request(response):
     white_origin = ['http://localhost:8080',
-                    'https://debug-product-test.web.app/']
+                    'https://debug-product-test.web.app']
     if request.headers['Origin'] in white_origin:
         response.headers['Access-Control-Allow-Origin'] = request.headers['Origin']
         response.headers['Access-Control-Allow-Methods'] = 'PUT,GET,POST,DELETE'
@@ -42,7 +42,7 @@ def before_request(response):
 @bp.after_request
 def after_request(response):
     white_origin = ['http://localhost:8080',
-                    'https://debug-product-test.web.app/']
+                    'https://debug-product-test.web.app']
     if request.headers['Origin'] in white_origin:
         response.headers['Access-Control-Allow-Origin'] = request.headers['Origin']
         response.headers['Access-Control-Allow-Methods'] = 'PUT,GET,POST,DELETE'
