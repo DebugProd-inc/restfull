@@ -21,4 +21,8 @@ def create_user():
     response = jsonify(user.to_dict())
     response.status_code = 201
     response.headers['Location'] = url_for('api.get_user', id=user.id)
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers["Access-Control-Allow-Methods"] = "GET, PUT, POST, DELETE"
+    response.headers["Access-Control-Allow-Headers"] = \
+        "Origin, X-Requested-With, Content-Type, Accept, Authorization"
     return response
