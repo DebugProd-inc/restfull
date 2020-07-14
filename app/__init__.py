@@ -2,6 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from config import Config
+from flask_cors import CORS
 
 
 app = Flask(__name__)  # noqa
@@ -24,3 +25,5 @@ from app.models.user import User
 
 from app.api import bp as api_bp
 app.register_blueprint(api_bp, url_prefix='/api')
+
+CORS(app)

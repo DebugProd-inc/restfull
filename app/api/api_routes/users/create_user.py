@@ -5,7 +5,7 @@ from app.api import bp
 from app.api.errors import bad_request
 
 
-@bp.route('/users', methods=['POST'])
+@bp.route('/user', methods=['POST'])
 def create_user():
     data = request.get_json() or {}
     if 'username' not in data or 'email' not in data or 'password' not in data:
@@ -19,10 +19,7 @@ def create_user():
     db.session.add(user)
     db.session.commit()
     response = jsonify(user.to_dict())
+    response
     response.status_code = 201
     response.headers['Location'] = url_for('api.get_user', id=user.id)
-    response.headers['Access-Control-Allow-Origin'] = '*'
-    response.headers["Access-Control-Allow-Methods"] = "GET, PUT, POST, DELETE"
-    response.headers["Access-Control-Allow-Headers"] = \
-        "Origin, X-Requested-With, Content-Type, Accept, Authorization"
     return response
