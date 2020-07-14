@@ -16,11 +16,11 @@ def center(x_i):
 
 # функция возвращает вектор дисперисии параметров
 def dispersion(x_i):
-    M_x_i = center(x_i)
     i = 0
-    for row in x_i:
-        result[i] += sum(row - M_x_i[i])/len(x_i)
-        i += 1
+    if len(x_i.shape) != 1:
+        result = np.var(x_i, axis=1)
+    else:
+        result = np.var(x_i)
     return result
 
 
@@ -41,12 +41,12 @@ def mahalanob(x_i):
 
 
 # класс выборочной функции распределения
-class Selective_distribution_function:
+class Selective_distribution_func:
     # функция получения квантили от выборки
     def getting_quantile(self, confidence_probability):
         return np.quantile(self.dj, confidence_probability)
 
-    def __init__(self, dj):  # конструктор
+    def __init__(self, dj, math_expected, dispersion):  # конструктор
         self.dj = dj
         self.math_expected = center(dj)
         self.dispersion = dispersion(dj)
@@ -57,16 +57,18 @@ class initial_values:
     def __init__(self, X):
         self.Init_X = X  # вектор (матрица) выборки
         # объект класса выборочной функции распределения
-        self.distribution_function =
-        Selective_distribution_function(mahalanob(X))
+        self.distribution_function = Selective_distribution_function(
+            mahalanob(X)
+            )
         self.geometric_center = center(X)  # геометрический центр
 
     def refinement_of_initial_values(self, Xj):
         # добавление значений к начальным
         self.Init_X = np.concatenate((self.Init_X, Xj), axis=1)
         # объект класса выборочной функции распределения
-        self.distribution_function =
-        Selective_distribution_function(mahalanob(self.Init_X))
+        self.distribution_function = Selective_distribution_func(
+            mahalanob(self.Init_X)
+            )
         self.geometric_center = center(self.Init_X)  # геометрический центр
 
 
@@ -75,9 +77,9 @@ class technical_condition_estimation_algorithm:
         self.confidence_probability = confidence_probability
         self.init_values = initial_values(Init_X)
         # получение квантили доверительной вероятности
-        self.MU_MAX = self.init_values.
-        distribution_function.
-        getting_quantile(self.confidence_probability)
+        self.MU_MAX = self.init_values.distribution_function.getting_quantile(
+            self.confidence_probability
+            )
 
     # функция проверки текущего тех. состояния
     def functional_check(d_i):
