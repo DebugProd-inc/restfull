@@ -3,11 +3,14 @@ from app import db
 from app.models.user import User
 from app.api import bp
 from app.api.errors import bad_request
+import json
 
 
 @bp.route('/user', methods=['POST'])
 def create_user():
-    data = request.get_json() or {}
+    data = json.loads(request.get_data()) or {}
+    print(111111111111111111111, 'email' in data,
+          'username' in data, 'password' in data)
     if 'username' not in data or 'email' not in data or 'password' not in data:
         return bad_request('must include username, email and password fields')
     if User.query.filter_by(username=data['username']).first():
