@@ -33,6 +33,5 @@ X_C = center(implementation_values)
 
 confidence_probability = float(input())  # ввод с консоли для проверки
 
-MU_MAX = Selective_distribution_func.getting_quantile(
-    mahalanob(implementation_values)
-    )
+
+math_for_algorithm.Beginning_of_work(implementation_values)

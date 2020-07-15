@@ -3,12 +3,17 @@ import random
 import scipy
 import scipy.spatial
 
+
+confidence_probability = 0.95  # уровень доверительной вероятности
+# может задаваться пользователем. По умолчанию значение 0,95
+
 Init_X = None
 Init_distance = None
 math_expected_Func = None
 dispersion_Func = None
 geometric_center = None
 MU_MAX = None
+cov_matrix = None
 
 confidence_probability = 0.95  # уровень доверительной вероятности
 # может задаваться пользователем. По умолчанию значение 0,95
@@ -26,7 +31,6 @@ def center(x_i):
 
 # функция возвращает вектор дисперисии параметров
 def dispersion(x_i):
-    i = 0
     if len(x_i.shape) != 1:
         result = np.var(x_i, axis=1)
     else:
@@ -36,10 +40,10 @@ def dispersion(x_i):
 
 # функция возвращает вектор расстояний параметров от мат. ожиданий
 def mahalanob(x_i, X_C):
+    global cov_matrix
     result = np.zeros(
         len(x_i[0])
         )
-    cov_matrix = np.cov(implementation_values)
     invers_cov_matrix = np.linalg.inv(cov_matrix)
     i = 0
     for i in range(0, len(x_i[0])):
@@ -59,6 +63,7 @@ def getting_quantile(confidence_probability):
 # функция уточнения начальных значений
 def refinement_of_initial_values(Xj):
     # добавление значений к начальным
+    global Init_X
     Init_X = np.concatenate((Init_X, Xj), axis=1)
     Beginning_of_work(Init_X)
 
@@ -66,7 +71,7 @@ def refinement_of_initial_values(Xj):
 # функция проверки текущего тех. состояния
 def functional_check(Xj):
     global MU_MAX
-    dj = mahalanob(Xj)
+    dj = mahalanob(Xj, geometric_center)
     if max(dj) <= MU_MAX:
         # максимальное значение дистанции параметров
         # должно быть не более квантиля доверительной вероятности
@@ -83,8 +88,10 @@ def Beginning_of_work(X):
     global geometric_center
     global confidence_probability
     global MU_MAX
+    global cov_matrix
     Init_X = X  # вектор (матрица) выборки
-    rgeometric_center = center(X)  # геометрический центр
+    cov_matrix = np.cov(Init_X)
+    geometric_center = center(X)  # геометрический центр
     Init_distance = mahalanob(Init_X, geometric_center)  # дистанция выборки
     math_expected_Func = center(Init_distance)  # мат. ожидание дистанции
     dispersion_Func = dispersion(Init_distance)  # дисперсия дистанции
@@ -95,5 +102,8 @@ def Beginning_of_work(X):
 # функция изменения уровня доверительной вероятности
 def Change_confidence_probability(new_confidence_probability):
     global confidence_probability
+    global MU_MAX
     confidence_probability = new_confidence_probability
     MU_MAX = getting_quantile(confidence_probability)
+
+# print("norm")
