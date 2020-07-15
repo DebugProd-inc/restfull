@@ -4,6 +4,10 @@ import scipy
 import scipy.spatial
 
 
+confidence_probability = 0.95  # уровень доверительной вероятности
+# может задаваться пользователем. По умолчанию значение 0,95
+
+
 # функция возвращает вектор мат. ожиданий параметров
 def center(x_i):
     result = np.zeros(len(x_i))
@@ -25,7 +29,7 @@ def dispersion(x_i):
 
 
 # функция возвращает вектор расстояний параметров от мат. ожиданий
-def mahalanob(x_i):
+def mahalanob(x_i, X_C):
     result = np.zeros(
         len(x_i[0])
         )
@@ -40,56 +44,50 @@ def mahalanob(x_i):
     return result
 
 
-# класс выборочной функции распределения
-class Selective_distribution_func:
-    # функция получения квантили от выборки
-    def getting_quantile(self, confidence_probability):
-        return np.quantile(self.dj, confidence_probability)
-
-    def __init__(self, dj, math_expected, dispersion):  # конструктор
-        self.dj = dj
-        self.math_expected = center(dj)
-        self.dispersion = dispersion(dj)
+# функция получения квантили от выборки
+def getting_quantile(confidence_probability):
+    global Init_distance
+    return np.quantile(Init_distance, confidence_probability)
 
 
-# Класс начальных значений.
-class initial_values:
-    def __init__(self, X):
-        self.Init_X = X  # вектор (матрица) выборки
-        # объект класса выборочной функции распределения
-        self.distribution_function = Selective_distribution_function(
-            mahalanob(X)
-            )
-        self.geometric_center = center(X)  # геометрический центр
-
-    def refinement_of_initial_values(self, Xj):
-        # добавление значений к начальным
-        self.Init_X = np.concatenate((self.Init_X, Xj), axis=1)
-        # объект класса выборочной функции распределения
-        self.distribution_function = Selective_distribution_func(
-            mahalanob(self.Init_X)
-            )
-        self.geometric_center = center(self.Init_X)  # геометрический центр
+# функция уточнения начальных значений
+def refinement_of_initial_values(Xj):
+    # добавление значений к начальным
+    Init_X = np.concatenate((Init_X, Xj), axis=1)
+    Beginning_of_work(Init_X)
 
 
-class technical_condition_estimation_algorithm:
-    def __init__(self, Init_X, confidence_probability):
-        self.confidence_probability = confidence_probability
-        self.init_values = initial_values(Init_X)
-        # получение квантили доверительной вероятности
-        self.MU_MAX = self.init_values.distribution_function.getting_quantile(
-            self.confidence_probability
-            )
+# функция проверки текущего тех. состояния
+def functional_check(Xj):
+    global MU_MAX
+    dj = mahalanob(Xj)
+    if max(dj) <= MU_MAX:
+        # максимальное значение дистанции параметров
+        # должно быть не более квантиля доверительной вероятности
+        return True
+    else:
+        return False
 
-    # функция проверки текущего тех. состояния
-    def functional_check(d_i):
-        if max(d_i) <= self.MU_MAX:
-            # максимальное значение дистанции параметров
-            # должно быть не более квантиля доверительной вероятности
-            return True
-        else:
-            return False
 
-    def current_value_processing(self, Xj):
-        dj = mahalanob(Xj)
-        return self.functional_check(dj)
+def Beginning_of_work(X):
+    global Init_X
+    global Init_distance
+    global math_expected_Func
+    global dispersion_Func
+    global geometric_center
+    global confidence_probability
+    global MU_MAX
+    Init_X = X  # вектор (матрица) выборки
+    rgeometric_center = center(X)  # геометрический центр
+    Init_distance = mahalanob(Init_X, geometric_center)  # дистанция выборки
+    math_expected_Func = center(Init_distance)  # мат. ожидание дистанции
+    dispersion_Func = dispersion(Init_distance)  # дисперсия дистанции
+    MU_MAX = getting_quantile(confidence_probability)
+    # ^^^получение квантили доверительной вероятности^^^
+
+
+# функция изменения уровня доверительной вероятности
+def Change_confidence_probability(new_confidence_probability):
+    global confidence_probability
+    confidence_probability = new_confidence_probability
+    MU_MAX = getting_quantile(confidence_probability)
