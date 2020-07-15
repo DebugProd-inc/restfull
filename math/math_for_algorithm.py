@@ -3,6 +3,12 @@ import random
 import scipy
 import scipy.spatial
 
+Init_X = None
+Init_distance = None
+math_expected_Func = None
+dispersion_Func = None
+geometric_center = None
+MU_MAX = None
 
 confidence_probability = 0.95  # уровень доверительной вероятности
 # может задаваться пользователем. По умолчанию значение 0,95
