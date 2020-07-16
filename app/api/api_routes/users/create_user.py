@@ -6,11 +6,13 @@ from app.api.errors import bad_request
 import json
 
 
-@bp.route('/user', methods=['POST'])
+@bp.route('/create', methods=['POST'])
 def create_user():
-    data = json.loads(request.get_data()) or {}
-    print(111111111111111111111, 'email' in data,
-          'username' in data, 'password' in data)
+    # data = json.loads(request.get_data())
+    data = jsonify(request.get_json())
+    print(1111111111111111111111111, data)
+    # print(111111111111111111111, 'email' in data,
+    #       'username' in data, 'password' in data)
     if 'username' not in data or 'email' not in data or 'password' not in data:
         return bad_request('must include username, email and password fields')
     if User.query.filter_by(username=data['username']).first():

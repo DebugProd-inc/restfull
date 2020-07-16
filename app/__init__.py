@@ -17,5 +17,4 @@ from app.all_models import *
 from app.api import bp as api_bp
 app.register_blueprint(api_bp, url_prefix='/api')
 
-CORS(app, resources={
-     r'*': {'origins': ['https://debug-product-test.web.app', 'http://localhost:8080']}})
+CORS(app, resources={r"/api/*": {"origins": "*"}})
