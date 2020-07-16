@@ -8,3 +8,24 @@ class Manufacturer(db.Model):
 
     def __repr__(self):
         return f'<Manufacturer {self.name}>'
+
+    def to_dict(self):
+        data = {
+            'id': self.id,
+            'name': self.name,
+            '_links': {
+                'self': url_for(
+                    'api.get_manufacturer',
+                    id=self.id
+                )
+            }
+        }
+        return data
+
+    def from_dict(self, data):
+        for field in [
+            'id',
+            'name'
+        ]:
+            if field in data:
+                setattr(self, field, data[field])
