@@ -6,7 +6,7 @@ from app.api.errors import bad_request
 import json
 
 
-@bp.route('/create', methods=['POST'])
+@bp.route('/users', methods=['POST'])
 def create_user():
     data = request.get_json()
     if 'username' not in data or 'email' not in data or 'password' not in data:
