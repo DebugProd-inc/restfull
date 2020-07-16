@@ -27,3 +27,5 @@ def create_user():
     response.status_code = 201
     response.headers['Location'] = url_for('api.get_user', id=user.id)
     return response
+
+    # https://debug-product-test.web.app/
