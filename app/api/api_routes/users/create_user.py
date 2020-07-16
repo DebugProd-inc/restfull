@@ -3,11 +3,12 @@ from app import db
 from app.models.user import User
 from app.api import bp
 from app.api.errors import bad_request
+import json
 
 
-@bp.route('/user', methods=['POST'])
+@bp.route('/create', methods=['POST'])
 def create_user():
-    data = request.get_json() or {}
+    data = request.get_json()
     if 'username' not in data or 'email' not in data or 'password' not in data:
         return bad_request('must include username, email and password fields')
     if User.query.filter_by(username=data['username']).first():
@@ -22,3 +23,5 @@ def create_user():
     response.status_code = 201
     response.headers['Location'] = url_for('api.get_user', id=user.id)
     return response
+
+    # https://debug-product-test.web.app/

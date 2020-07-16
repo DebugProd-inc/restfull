@@ -12,18 +12,9 @@ db = SQLAlchemy(app)  # noqa
 migrate = Migrate(app, db)  # noqa
 
 from app import router
-from app.models.board import Board
-from app.models.direction import Direction
-from app.models.flight import Flight
-from app.models.manufacturer import Manufacturer
-from app.models.model import Model
-from app.models.parameter import Parameter
-from app.models.parameter_value import ParameterValue
-from app.models.phase_of_flight import PhaseOfFlight
-from app.models.subsystem import Subsystem
-from app.models.user import User
+from app.all_models import *
 
 from app.api import bp as api_bp
 app.register_blueprint(api_bp, url_prefix='/api')
 
-CORS(app)
+CORS(app, resources={r"/api/*": {"origins": "*"}})
