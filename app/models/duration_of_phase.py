@@ -6,5 +6,6 @@ duration_of_phase = db.Table(
     db.Column("id_flight", db.Integer, db.ForeignKey("flight.id")),
     db.Column("id_phase", db.Integer, db.ForeignKey("phase_of_flight.id")),
     db.Column("start_phase", db.Time),
-    db.Column("end_phase", db.Time)
+    db.Column("end_phase", db.Time),
+    db.Column("id_previous_phase", db.Integer, db.ForeignKey("duration_of_phase.id"))
     )
