@@ -20,3 +20,31 @@ class Flight(db.Model):
 
     def __repr__(self):
         return f'<Flight {self.id} of id_board {self.id_board}>'
+    
+    def to_dict(self):
+        data = {
+            'id': self.id,
+            'id_board': self.id_board,
+            'id_direction': self.id_direction,
+            'time_begin': self.time_begin,
+            'date_begin': self.date_begin,
+            '_links': {
+                'self': url_for(
+                    'api.get_flight',
+                    id=self.id
+                )
+            }
+        }
+        return data
+
+    def from_dict(self, data):
+        for field in [
+            'id',
+            'id_board',
+            'id_direction',
+            'time_begin',
+            'date_begin'
+        ]:
+            if field in data:
+                setattr(self, field, data[field])
+           
