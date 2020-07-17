@@ -25,7 +25,7 @@ x3 = np.array([
     ])
 
 # переменная для хранения массивов начальных значений
-IMPLEMENTATION_VALUES = np.row_stack((x1, x2, x3))
+implementation_values = np.row_stack((x1, x2, x3))
 
 # уровень вероятности безперебойной работы ВС
 confidence_probability = 0.95
