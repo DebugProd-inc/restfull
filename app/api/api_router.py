@@ -1,3 +1,6 @@
+from app.api.api_routes.load_files.download_file import download
+from app.api.api_routes.load_files.upload_file import upload
+
 from app.api.api_routes.users.create_user import create_user
 from app.api.api_routes.users.get_user import get_user
 from app.api.api_routes.users.get_users import get_users
