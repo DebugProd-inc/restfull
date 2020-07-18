@@ -14,7 +14,7 @@ class ParameterValue(db.Model):
         return f'<ParameterValue {self.value} \
             of id_parameter {self.id_parameter}>'
 
-     def to_dict(self):
+    def to_dict(self):
         data = {
             'id': self.id,
             'id_parameter': self.id_parameter,
