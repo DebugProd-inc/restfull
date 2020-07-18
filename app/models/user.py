@@ -2,7 +2,7 @@ import os
 import base64
 from datetime import datetime, timedelta
 from flask import url_for
-from app import db
+from app import app, db
 from app.models.utils.paginted_mixin import PaginatedAPIMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -24,7 +24,7 @@ class User(PaginatedAPIMixin, db.Model):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
-    def get_token(self, expires_in=3600):
+    def get_token(self, expires_in=app.config['TOKEN_LIFE_TIME']):
         now = datetime.utcnow()
         if self.token_expiration:
             not_rotten = self.token_expiration > now + timedelta(seconds=60)
@@ -35,7 +35,7 @@ class User(PaginatedAPIMixin, db.Model):
         db.session.add(self)
         return self.token
 
-    def get_refresh_token(self, expires_in=3600):
+    def get_refresh_token(self, expires_in=app.config['TOKEN_LIFE_TIME']):
         now = datetime.utcnow()
         self.token = base64.b64encode(os.urandom(24)).decode('utf-8')
         self.token_expiration = now + timedelta(seconds=expires_in)
