@@ -19,5 +19,5 @@ def functional_check(distance, mu_max, implementation_values):
 
 # пример добавления элементов в массив distance
 """distance = np.array([0, 0, 1])
-distance = np.matrix(C)
-distance = np.transpose(C)"""
+distance = np.matrix(distance)
+distance = np.transpose(distance)"""
