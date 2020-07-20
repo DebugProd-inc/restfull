@@ -1,4 +1,4 @@
-from flask import g
+from flask import g, jsonify
 from flask_httpauth import HTTPBasicAuth, HTTPTokenAuth
 from app.models.user import User
 from app.api.errors import error_response
@@ -12,7 +12,8 @@ def verify_password(username, password):
     if user is None:
         return False
     g.current_user = user
-    return user.check_password(password)
+    response = jsonify(user.get_token())
+    return user.check_password(password), response  # may be a bug
 
 
 @basic_auth.error_handler
