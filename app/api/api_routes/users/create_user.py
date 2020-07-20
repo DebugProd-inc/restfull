@@ -8,7 +8,10 @@ import json
 
 @bp.route('/users', methods=['POST'])
 def create_user():
-    data = request.get_json()
+
+    data = json.loads(request.get_data())
+
+    print(data, 1111111)
     if 'username' not in data or 'email' not in data or 'password' not in data:
         return bad_request('must include username, email and password fields')
     if User.query.filter_by(username=data['username']).first():
