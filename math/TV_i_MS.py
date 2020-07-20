@@ -6,7 +6,7 @@ import math
 
 # получение из выборки расстояний Махаланобиса при штатном
 # функционировании квантили заднного уровня
-S = 0  # степень полинома
+S = 0  # степень полинома я хз как её реально найти, так что от балды
 
 
 def get_quantile(dj, confidence_probability):
@@ -26,9 +26,7 @@ def parameter_estimation(X, Y):
 def get_func(dj):
     dj.sort()
     f = []
-    i = 0
-    for a in dj:
-        i += 1
+    for i in range(0, len(dj)):
         p = i/len(dj)
         f.append(p)
     return f
@@ -36,16 +34,17 @@ def get_func(dj):
 
 def get_X_Matrix(dj):
     global S
+    S = len(dj)
     New_d = []
     for i in range(0, len(dj)):
         New_d.append([])
-        for j in range(0, S):
-            New_d[i].append(dj[i])
+        for j in range(S + 1, 0):
+            New_d[i].append(dj[i]**j)
     return New_d
 
 
 class Class_distribution_func:
-    def __init__(dj):
+    def __init__(self, dj):
         self.d = dj.sort()
         fun = lambda x: (-(math.log(1-x)))  # ему не нравится лямбда
         # но мне пофиг, потому что мне нравится)))))
@@ -55,8 +54,18 @@ class Class_distribution_func:
             np.transpose(B_)
             )
 
-    def B_Veybull(x):
+    def B_Veybull(self, x):
         return np.polyval(self.parameters, x)
 
-    def get_value(x):
+    def get_value(self, x):
         return 1 - (math.e**(-self.B_Veybull(x)))
+    
+    def get_quantile(self, alfa):
+        B_ = (-(math.log(1-alfa)))
+        param = np.copy(self.parameters)
+        param[len(B_)-1] -= B_
+        roots = np.roots(param)
+        roots = filter(lambda x: (x >= 0) and
+        (isinstance(x, float)), roots)
+        return min(roots)  # выбор корня подвергается критике
+        # я хз пока как делать правильно, так что пока так
