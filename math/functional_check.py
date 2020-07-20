@@ -7,11 +7,8 @@ import numpy as np
 # записывается в доспустимые значения
 
 
-def functional_check(distance, mu_max, implementation_values):
+def functional_check(distance, mu_max):
     if max(distance) <= mu_max:
-        update_values.refinement_of_initial_values(
-            distance, implementation_values
-            )
         return True
     else:
         return False
