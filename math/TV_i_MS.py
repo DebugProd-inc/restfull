@@ -9,6 +9,7 @@ import math
 S = 0  # степень полинома я хз как её реально найти, так что от балды
 
 
+# квантиль выборочной функции распределения
 def get_quantile(dj, confidence_probability):
     return np.quantile(dj, confidence_probability)
 
@@ -23,6 +24,7 @@ def parameter_estimation(X, Y):
     return result
 
 
+# выборочная функция распределения
 def get_func(dj):
     dj.sort()
     f = []
@@ -32,6 +34,7 @@ def get_func(dj):
     return f
 
 
+# Создаёт матрицу X для МНК оценки. (первый столбец единицы)
 def get_X_Matrix(dj):
     global S
     S = len(dj)
@@ -43,29 +46,33 @@ def get_X_Matrix(dj):
     return New_d
 
 
+# Класс функции распределения
 class Class_distribution_func:
-    def __init__(self, dj):
-        self.d = dj.sort()
+    def __init__(self, dj):  # конструктор
+        self.d = dj.sort()  # запоминаем значения выборки дистанции (особо не надо)
         fun = lambda x: (-(math.log(1-x)))  # ему не нравится лямбда
         # но мне пофиг, потому что мне нравится)))))
-        B_ = map(fun, get_func(dj))
+        B_ = map(fun, get_func(dj))  # по выборочной функции распределения
+        # находим значения полинома для каждого из значений функции
         self.parameters = parameter_estimation(
             get_X_Matrix(dj),
             np.transpose(B_)
             )
+        # находим коэффициенты полинома (чтобы потом вычислять)
 
-    def B_Veybull(self, x):
+    def B_Veybull(self, x):  # значение полинома для распределения Вейбулла
         return np.polyval(self.parameters, x)
 
-    def get_value(self, x):
+    def get_value(self, x):  # значение функции распределения в точке
         return 1 - (math.e**(-self.B_Veybull(x)))
     
     def get_quantile(self, alfa):
-        B_ = (-(math.log(1-alfa)))
-        param = np.copy(self.parameters)
-        param[len(B_)-1] -= B_
-        roots = np.roots(param)
+        B_ = (-(math.log(1-alfa)))  # значение полинома (обратное от функции распределения)
+        param = np.copy(self.parameters)  # копируем параметры, чтобы не испортить начальные значения
+        param[len(B_)-1] -= B_  # вычитаем из последнего коэффициента значение полинома от альфа
+        # чтобы получить коэф. многочлена, для нахождения его корней
+        roots = np.roots(param)  # вычисление корней
         roots = filter(lambda x: (x >= 0) and
-        (isinstance(x, float)), roots)
+        (isinstance(x, float)), roots)  # фильтруем корни от отрицательных и комплексных
         return min(roots)  # выбор корня подвергается критике
         # я хз пока как делать правильно, так что пока так
