@@ -12,8 +12,7 @@ def verify_password(username, password):
     if user is None:
         return False
     g.current_user = user
-    response = jsonify(user.get_token())
-    return user.check_password(password), response  # may be a bug
+    return user.check_password(password)
 
 
 @basic_auth.error_handler
