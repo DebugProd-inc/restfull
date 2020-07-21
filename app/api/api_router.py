@@ -58,3 +58,5 @@ from app.api.api_routes.phases_of_flight.get_phases_of_flight \
     import get_phases_of_flight
 from app.api.api_routes.phases_of_flight.update_phase_of_flight \
     import update_phase_of_flight
+
+from app.api.help import help_
