@@ -12,10 +12,11 @@ def help_():
             "update_user ['PUT']": "users/<id>"
         },
         "Boards": {
-            "create_board [POST]": "boards",
+            "create_board ['POST']": "boards",
             "get_board ['GET']": "boards/<registration_number>",
             "get_boards ['GET']": "boards",
             "update_board ['PUT']": "boards/<registration_number>"
         }
+
     }
     return jsonify(help_dict)
