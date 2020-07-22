@@ -6,7 +6,7 @@ import math
 
 # получение из выборки расстояний Махаланобиса при штатном
 # функционировании квантили заднного уровня
-S = 0  # степень полинома в распределении Вейбулла
+S = 5  # степень полинома в распределении Вейбулла
 
 
 # квантиль выборочной функции распределения
@@ -57,7 +57,6 @@ class Class_distribution_func:
         # по выборочной функции распределения
         # находим значения полинома для каждого из значений функции
         B_ = np.matrix(list(map(lambda x: (-(math.log(1-x))), get_func(dj))))
-        print(B_)
         # находим коэффициенты полинома (чтобы потом вычислять)
         self.parameters = parameter_estimation(
             get_X_Matrix(dj),
@@ -75,18 +74,21 @@ class Class_distribution_func:
         # значение полинома (обратное от функции распределения)
         param = np.copy(self.parameters)
         # копируем параметры, чтобы не испортить начальные значения
-        param[len(B_)-1] -= B_
+        param[len(param)-1] -= B_
+        param = np.reshape(param, (1, len(param)))
         # вычитаем из последнего коэффициента значение полинома от альфа
         # чтобы получить коэф. многочлена, для нахождения его корней
-        roots = np.roots(param)
+        roots = np.roots(param[0])
         # вычисление корней
-        roots = filter(lambda x: (x >= 0) and (isinstance(x, float)), roots)
+        roots = list(
+            filter(lambda x: (x >= 0) and (isinstance(x, float)), roots)
+            )
         # фильтруем корни от отрицательных и комплексных
-        return min(roots)  # выбор корня подвергается критике
+        return roots  # выбор корня подвергается критике
         # я хз пока как делать правильно, так что пока так
 
 
 # значения для проверки функциональности
-# a = np.array([1, 1.1, 1.9, 2, 1.2, 2.1])
-# c = Class_distribution_func(a)
-# print(c.get_quantile(0.8))
+a = np.array([1, 1.1, 1.9, 2, 1.2, 2.1])
+c = Class_distribution_func(a)
+print(c.get_quantile(0.8))
