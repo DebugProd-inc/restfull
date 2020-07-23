@@ -5,7 +5,6 @@ import numpy as np
 
 
 def get_dispersion(x_i):
-    i = 0
     if len(x_i.shape) != 1:
         result = np.var(x_i, axis=1)
     else:
