@@ -3,6 +3,7 @@ import scipy
 import scipy.spatial
 import math
 import test_values
+import Working_With_JSON
 
 # получение из выборки расстояний Махаланобиса при штатном
 # функционировании квантили заднного уровня
@@ -39,8 +40,8 @@ def get_func(dj):
 
 # Создаёт матрицу X для МНК оценки. (первый столбец единицы)
 def get_X_Matrix(dj):
-    S = 2
-    S = len(dj)
+    S = 1  # константа
+    # S = len(dj)
     New_d = []
     for i in range(0, len(dj)):
         New_d.append([])
@@ -83,17 +84,21 @@ class Class_distribution_func:
         roots = np.roots(param[0])
         # a = [] А ЭТО НАДО?
         # вычисление корней
+        print(roots.__str__() + "==КОРНИ БЕЗ ФИЛЬТРА")
         roots = list(filter(
             lambda x: (x.imag == 0 and x.real >= 0), roots
             ))
         # фильтруем корни от отрицательных и комплексных
-        roots = map(lambda x: (x=x.real), roots)
+        roots = list(map(lambda x: (x.real), roots))
+        print(roots.__str__() + " @@")
+        print("len = " + str(len(roots)))
         result = min(roots)
         return result  # выбор корня подвергается критике
         # я хз пока как делать правильно, так что пока так
 
 
 a = test_values.x1  # np.array([1, 1.1, 1.9, 2, 1.2, 2.1])
+Working_With_JSON.Write_Init_Data(a)
 c = Class_distribution_func(a)
 print(get_quantile(a, 0.8))
 print(c.get_quantile(0.8))
