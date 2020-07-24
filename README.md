@@ -10,13 +10,19 @@
   pip install -r requirements.txt
 ------------------------------------------------------------------------------
 ### Работа с базой данных: 
-* Для инициализации базы данных выполнить: flask db init 
-* Для выполнения миграции выполнить: flask db upgrade 
+1. Для настройки PostgreSQL: 
+* set (export для linux) POSTGRES_URL="host:port of your postgres"
+* set (export для linux) POSTGRES_USER="your_postgres_username"
+* set (export для linux) POSTGRES_PW="your_postgres_password"
+* set (export для linux) POSTGRES_DB="your_postgres_db_name" 
+2. Для инициализации базы данных выполнить: flask db init 
+3. Для создания миграции выполнить: flask db migrate -m "название миграции" 
+4. Для выполнения миграции выполнить: flask db upgrade 
 ------------------------------------------------------------------------------
 ### Запуск приложения: 
 **1. Установить переменную среды FLASK_APP:** 
 * set FLASK_APP=restfull.py (для Windows)
-* export FLASK_APP=restfull.py (для Linux)
+* export FLASK_APP=restfull.py (для Linux) 
 **2. Выполнить команду:** 
 * flask run 
 * "hotReload": flask run --reload
