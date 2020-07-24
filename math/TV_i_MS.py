@@ -6,7 +6,13 @@ import test_values
 
 # получение из выборки расстояний Махаланобиса при штатном
 # функционировании квантили заднного уровня
-S = 5  # степень полинома в распределении Вейбулла
+S = 2  # степень полинома в распределении Вейбулла
+
+
+# функция конвертации в веществ. если мнимая часть 0
+def convertFromCompToFloat(x):
+    if (x.imag == 0):
+        x = x.real
 
 
 # квантиль выборочной функции распределения
@@ -87,12 +93,14 @@ class Class_distribution_func:
         param = np.reshape(param, (1, len(param)))
         # вычитаем из последнего коэффициента значение полинома от альфа
         # чтобы получить коэф. многочлена, для нахождения его корней
-        roots = np.roots(param[0])
-        a = []
+        roots = np.roots(param)
+        # a = []
         # вычисление корней
-        roots = list((filter(lambda x: (x >= 0) and (isinstance(x, float)), roots))
-        for r in roots:
-            is_float(r)
+        roots = map(convertFromCompToFloat, roots)
+        roots = list((filter
+        (
+            lambda x: (x >= 0) and (isinstance(x, float)), roots)
+        )
         # фильтруем корни от отрицательных и комплексных
         return roots  # выбор корня подвергается критике
         # я хз пока как делать правильно, так что пока так
