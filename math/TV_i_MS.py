@@ -6,7 +6,7 @@ import test_values
 
 # получение из выборки расстояний Махаланобиса при штатном
 # функционировании квантили заднного уровня
-S = 5  # степень полинома в распределении Вейбулла
+S = 18  # степень полинома в распределении Вейбулла
 
 
 # квантиль выборочной функции распределения
@@ -22,7 +22,7 @@ def parameter_estimation(X, Y):
     result = np.linalg.inv(result)
     result = np.dot(result, X_)
     result = np.dot(result, Y)
-    print('p.e = ', result)
+# print('p.e = ', result)
     return result
 
 
@@ -33,7 +33,7 @@ def get_func(dj):
     for i in range(0, len(dj)):
         p = i/len(dj)
         f.append(p)
-    print('g.f. = ', f)
+# print('g.f. = ', f)
     return f
 
 
@@ -46,7 +46,7 @@ def get_X_Matrix(dj):
         New_d.append([])
         for j in range(0, S + 1):
             New_d[i].append(dj[i]**j)
-    print('X_matrix = ', np.matrix(New_d))
+# print('X_matrix = ', np.matrix(New_d))
     return np.matrix(New_d)
 
 
@@ -71,13 +71,6 @@ class Class_distribution_func:
     def get_value(self, x):  # значение функции распределения в точке
         return 1 - (math.e**(-self.B_Veybull(x)))
 
-    def is_float(x):
-        if (x.imag == 0):
-            x = x.real
-            return True
-        else:
-            return False
-
     def get_quantile(self, alfa):
         B_ = (-(math.log(1-alfa)))
         # значение полинома (обратное от функции распределения)
@@ -90,18 +83,15 @@ class Class_distribution_func:
         roots = np.roots(param[0])
         a = []
         # вычисление корней
-        roots = list((filter(lambda x: (x >= 0) and (isinstance(x, float)), roots))
-        for r in roots:
-            is_float(r)
+        roots = list(filter(
+            lambda x: (x.imag == 0 and x.real >= 0), roots
+            ))
         # фильтруем корни от отрицательных и комплексных
-        return roots  # выбор корня подвергается критике
+        return roots[0].real  # выбор корня подвергается критике
         # я хз пока как делать правильно, так что пока так
 
 
 a = test_values.x1  # np.array([1, 1.1, 1.9, 2, 1.2, 2.1])
-
 c = Class_distribution_func(a)
-
 print(get_quantile(a, 0.8))
-
 print(c.get_quantile(0.8))
