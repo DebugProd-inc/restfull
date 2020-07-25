@@ -8,11 +8,11 @@ from get_center import get_center
 # от геометрического центра до текущих координат
 
 
-def mahalanob(x_i, x_c, implementation_values):
+def mahalanob(x_i, x_c, implementation_values, cov_matrix):
     result = np.zeros(
         len(x_i[0])
         )
-    cov_matrix = np.cov(implementation_values)
+#    cov_matrix = np.cov(implementation_values)
     invers_cov_matrix = np.linalg.inv(cov_matrix)
     i = 0
     for i in range(0, len(x_i[0])):
