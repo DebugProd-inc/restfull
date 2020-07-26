@@ -1,3 +1,4 @@
+from flask import url_for
 from app import db
 
 
@@ -39,4 +40,4 @@ class ParameterValue(db.Model):
             'id_flight'
         ]:
             if field in data:
-                setattr(self, field, data[field])           
+                setattr(self, field, data[field])
