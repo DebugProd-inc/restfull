@@ -7,6 +7,7 @@ from flask_cors import CORS
 
 app = Flask(__name__)  # noqa
 app.config.from_object(Config)  # noqa
+CORS(app, resources={r"/api/*": {"origins": "*"}})  # noqa
 
 db = SQLAlchemy(app)  # noqa
 migrate = Migrate(app, db)  # noqa
@@ -16,5 +17,4 @@ from app.all_models import *
 
 from app.api import bp as api_bp
 app.register_blueprint(api_bp, url_prefix='/api')
-
-CORS(app, resources={r"/api/*": {"origins": "*"}})
+CORS(api_bp, resources={r"/api/*": {"origins": "*"}})
