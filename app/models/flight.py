@@ -17,7 +17,7 @@ class Flight(db.Model):
     phase_of_flight = db.relationship(
         "PhaseOfFlight", secondary=duration_of_phase, back_populates="flight"
     )
-    parameter_value = db.relationship("ParameterValue")
+    parameter_value = db.relationship("ParameterValue")  # Тут это точно нужно?
 
     def __repr__(self):
         return f'<Flight {self.id} of id_board {self.id_board}>'

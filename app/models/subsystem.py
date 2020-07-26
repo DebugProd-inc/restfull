@@ -1,8 +1,9 @@
 from flask import url_for
 from app import db
+from app.models.utils.paginted_mixin import PaginatedAPIMixin
 
 
-class Subsystem(db.Model):
+class Subsystem(PaginatedAPIMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, index=True)
     id_board = db.Column(

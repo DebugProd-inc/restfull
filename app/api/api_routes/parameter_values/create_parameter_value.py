@@ -12,12 +12,12 @@ def create_parameter_value():
     data = request.get_json() or {}
     if 'id_parameter' not in data or \
             'time' not in data or \
-                'value' not in data or \
-                    'id_flight' not in data:
+            'value' not in data or \
+            'id_flight' not in data:
         return bad_request('must include id_parameter, \
             time, value, id_flight fields')
 
-    parameter_value = ParameterVale()
+    parameter_value = ParameterValue()
     parameter_value.from_dict(data)
     db.session.add(parameter_value)
     db.session.commit()

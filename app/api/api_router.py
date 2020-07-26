@@ -59,4 +59,9 @@ from app.api.api_routes.phases_of_flight.get_phases_of_flight \
 from app.api.api_routes.phases_of_flight.update_phase_of_flight \
     import update_phase_of_flight
 
+from app.api.api_routes.subsystems.create_subsystem import create_subsystem
+from app.api.api_routes.subsystems.get_subsystem import get_subsystem
+from app.api.api_routes.subsystems.get_subsystems import get_subsystems
+from app.api.api_routes.subsystems.update_subsystem import update_subsystem
+
 from app.api.help import help_

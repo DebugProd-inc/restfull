@@ -1,28 +1,27 @@
 from flask import url_for, request, jsonify
 from app import db
-from app.models.parameter import Parameter
+from app.models.subsystem import Subsystem
 from app.api import bp
 from app.api.errors import bad_request
 from app.api.auth import token_auth
 
 
-@bp.route('/parameters', methods=['POST'])
+@bp.route('/subsystems', methods=['POST'])
 @token_auth.login_required
-def create_parameter():
+def create_subsystem():
     data = request.get_json() or {}
     if 'name' not in data or \
-            'id_subsystem' not in data:
+            'id_board' not in data:
         return bad_request('must include name, \
-            id_subsystem fields')
+id_board fields')
 
-    parameter = Parameter()
-    parameter.from_dict(data)
-    db.session.add(parameter)
+    subsystem = Subsystem()
+    subsystem.from_dict(data)
+    db.session.add(subsystem)
     db.session.commit()
-    response = jsonify(parameter.to_dict())
+    response = jsonify(subsystem.to_dict())
     response.status_code = 201
     response.headers['Location'] = url_for(
-        'api.get_parameter',
-        id=parameter.id
+        'api.create_subsystem'
     )
     return response
