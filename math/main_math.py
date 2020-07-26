@@ -6,9 +6,19 @@ import TV_i_MS
 import test_values
 import functional_check
 import mahalanobis_distance as md
+import get_center
 
-X_C = get_center.get_center(xj)
-COV_MATRIX = np.cov(xj)
+
+# получение центра, ковариационной матрицы и параметров функции распределения
+# xj - матрица исходных данных штатного функционирования
+def reference_parameters(xj):
+    global X_C
+    global COV_MATRIX
+    global PARAMETRS
+    X_C = get_center.get_center(xj)
+    COV_MATRIX = np.cov(xj)
+    tvims = TV_i_MS.Class_distribution_func(md.mahalanob(xj, X_C, COV_MATRIX))
+    PARAMETRS = tvims.parameters
 
 
 def update_values(Xj):
@@ -32,7 +42,7 @@ def begin(Xi):
 def check(confidence_level, Xj):
     global Veybull
     global distance
-    MU_max = Veybull.get_quantile(confidence_level)
+    MU_max = Veybull.get_quantile(confidence_level, PARAMETRS)
     flag = functional_check.functional_check(distance, mu_max)
     if (flag):
         update_values(Xj)
