@@ -1,4 +1,4 @@
-import update_values
+# import update_values
 import numpy as np
 
 # проверка функциональности ВС

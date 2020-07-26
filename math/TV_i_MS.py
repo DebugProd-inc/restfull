@@ -55,9 +55,9 @@ class Class_distribution_func:
     def get_value(self, x):  # значение функции распределения в точке
         return 1 - (math.e**(-self.B_Veybull(x)**self.S))
 
-    def get_quantile(self, alpha, p):
+    def get_quantile(self, alpha):
         result = pnv.inversefunc(
-            (lambda x: 1 - math.exp(-(np.polyval(p, x))**self.S)),
+            (lambda x: 1 - math.exp(-(np.polyval(self.parameters, x))**self.S)),
             y_values=alpha)
         return result
 
