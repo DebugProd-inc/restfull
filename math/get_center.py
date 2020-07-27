@@ -6,6 +6,6 @@ def get_center(x_i):
     result = np.zeros(len(x_i))
     i = 0
     for row in x_i:
-        result[i] += sum(row)/len(x_i)
+        result[i] = sum(row)/len(row)
         i += 1
     return result

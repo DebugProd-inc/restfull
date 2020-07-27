@@ -12,6 +12,7 @@ def Read_Init_Data():
         # [..]
         # ]}
     Init_data = numpy.array(Init_data, float)
+    print(Init_data)
     return Init_data
 
 
