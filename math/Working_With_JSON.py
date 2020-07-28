@@ -12,7 +12,7 @@ def Read_Init_Data():
         # [..]
         # ]}
     Init_data = numpy.array(Init_data, float)
-    print(Init_data)
+    # print(Init_data)
     return Init_data
 
 
@@ -34,16 +34,16 @@ def Write_result(operation_permit):
     ''' dict_result["distribution_function_parameters"]
     = distribution_function_parameters.tolist()'''
     with open("Result.json", "w") as f:
-        f.write(json.dump(dict_result))
+        json.dump(dict_result, f)
 
 
 def Write_Math_Data(cov, MU_MAX, X_C):
     dict_result = {}
-    dict_result["Cov_matrix"] = cov
-    dict_result["MU_MAX"] = MU_MAX
-    dict_result["X_C"] = X_C
+    dict_result["Cov_matrix"] = cov.tolist()
+    dict_result["MU_MAX"] = float(MU_MAX)
+    dict_result["X_C"] = X_C.tolist()
     with open("MathData.json", "w") as f:
-        f.write(json.dump(dict_result))
+        json.dump(dict_result, f)
 
 
 def Read_Math_Data():
@@ -57,3 +57,9 @@ def Read_Cur():
     with open("Cur_Parametrs.json", "r") as f:
         Cur = json.load(f)
     return Cur
+
+
+def Write_Cur(Cur_x):
+    data = Cur_x.tolist()
+    with open("Cur_Parametrs.json", "w") as f:
+        json.dump(data, f)
