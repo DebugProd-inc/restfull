@@ -1,4 +1,5 @@
 import os
+
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 
@@ -14,8 +15,8 @@ class Config:
     POSTGRES_DB = os.environ.get('POSTGRES_DB')
 
     if POSTGRES_URL and POSTGRES_USER and POSTGRES_PW and POSTGRES_DB:
-        PG_DB_URL = f'postgresql+psycopg2://{POSTGRES_USER}:{POSTGRES_PW}\
-@{POSTGRES_URL}/{POSTGRES_DB}'
+        PG_DB_URL = f'postgresql+psycopg2://{POSTGRES_USER}:{POSTGRES_PW} '
+        + f'@{POSTGRES_URL}/{POSTGRES_DB}'
     else:
         PG_DB_URL = None
 
@@ -27,7 +28,7 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     # working with tokens
-    TOKEN_LIFE_TIME = 900
+    TOKEN_LIFE_TIME = 900  # in seconds
 
     # working with files
     UPLOADED_DOCS_DEST = os.path.abspath("static\\docs")

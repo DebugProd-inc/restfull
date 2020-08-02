@@ -1,6 +1,11 @@
-from flask import url_for, request, jsonify
+from flask import (
+    url_for,
+    request,
+    jsonify
+)
+
 from app import db
-from app.models.phase_of_flight import PhaseOfFlight
+from app.all_models import PhaseOfFlight
 from app.api import bp
 from app.api.errors import bad_request
 from app.api.auth import token_auth

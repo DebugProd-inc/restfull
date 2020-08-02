@@ -1,6 +1,11 @@
-from flask import url_for, request, jsonify
+from flask import (
+    url_for,
+    request,
+    jsonify
+)
+
 from app import db
-from app.models.board import Board
+from app.all_models import Board
 from app.api import bp
 from app.api.errors import bad_request
 from app.api.auth import token_auth
@@ -13,8 +18,10 @@ def create_board():
     if 'registration_number' not in data or \
         'id_model' not in data or \
             'year_of_manufacture' not in data:
-        return bad_request('must include registration_number, \
-            id_model, year_of_manufacture fields')
+        return bad_request(
+            'must include registration_number, '
+            + 'id_model, year_of_manufacture fields'
+        )
     nu = Board.query.filter_by(registration_number=data['registration_number'])
     if nu.first():
         return bad_request('please use a different registration_number')

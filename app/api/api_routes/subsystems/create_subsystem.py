@@ -1,6 +1,11 @@
-from flask import url_for, request, jsonify
+from flask import (
+    url_for,
+    request,
+    jsonify
+)
+
 from app import db
-from app.models.subsystem import Subsystem
+from app.all_models import Subsystem
 from app.api import bp
 from app.api.errors import bad_request
 from app.api.auth import token_auth
@@ -12,8 +17,10 @@ def create_subsystem():
     data = request.get_json() or {}
     if 'name' not in data or \
             'id_board' not in data:
-        return bad_request('must include name, \
-id_board fields')
+        return bad_request(
+            'must include name, '
+            + 'id_board fields'
+        )
 
     subsystem = Subsystem()
     subsystem.from_dict(data)

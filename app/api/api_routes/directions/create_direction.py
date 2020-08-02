@@ -1,6 +1,11 @@
-from flask import url_for, request, jsonify
+from flask import (
+    url_for,
+    request,
+    jsonify
+)
+
 from app import db
-from app.models.direction import Direction
+from app.all_models import Direction
 from app.api import bp
 from app.api.errors import bad_request
 from app.api.auth import token_auth
@@ -12,8 +17,10 @@ def create_direction():
     data = request.get_json() or {}
     if 'point_of_departure' not in data or \
             'point_of_destination' not in data:
-        return bad_request('must include point_of_departure, \
-            point_of_destination fields')
+        return bad_request(
+            'must include point_of_departure, '
+            + 'point_of_destination fields'
+        )
 
     direction = Direction()
     direction.from_dict(data)

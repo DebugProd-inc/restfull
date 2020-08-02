@@ -1,6 +1,11 @@
-from flask import url_for, request, jsonify
+from flask import (
+    url_for,
+    request,
+    jsonify
+)
+
 from app import db
-from app.models.manufacturer import Manufacturer
+from app.all_models import Manufacturer
 from app.api import bp
 from app.api.errors import bad_request
 from app.api.auth import token_auth
@@ -11,7 +16,7 @@ from app.api.auth import token_auth
 def create_manufacturer():
     data = request.get_json() or {}
     if 'name' not in data:
-        return bad_request('must include name fields')
+        return bad_request('must include name field')
 
     manufacturer = Manufacturer()
     manufacturer.from_dict(data)

@@ -1,5 +1,6 @@
 from flask import request, jsonify
-from app.models.direction import Direction
+
+from app.all_models import Direction
 from app.api import bp
 from app.api.auth import token_auth
 

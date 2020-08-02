@@ -1,6 +1,11 @@
-from flask import url_for, request, jsonify
+from flask import (
+    url_for,
+    request,
+    jsonify
+)
+
 from app import db
-from app.models.model import Model
+from app.all_models import Model
 from app.api import bp
 from app.api.errors import bad_request
 from app.api.auth import token_auth
@@ -12,8 +17,10 @@ def create_model():
     data = request.get_json() or {}
     if 'name' not in data or \
             'id_manufacturer' not in data:
-        return bad_request('must include name, \
-            id_manufacturer fields')
+        return bad_request(
+            'must include name, '
+            + 'id_manufacturer fields'
+        )
 
     model = Model()
     model.from_dict(data)

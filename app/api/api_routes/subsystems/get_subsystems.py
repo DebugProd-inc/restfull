@@ -1,5 +1,6 @@
 from flask import request, jsonify
-from app.models.subsystem import Subsystem
+
+from app.all_models import Subsystem
 from app.api import bp
 from app.api.auth import token_auth
 

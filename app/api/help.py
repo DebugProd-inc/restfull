@@ -1,4 +1,5 @@
 from flask import url_for, jsonify
+
 from app.api import bp
 
 
@@ -22,7 +23,7 @@ def help_():
             "get_direction ['GET']": "directions/<id>",
             "get_directions ['GET']": "directions",
             "update_direction ['PUT']": "directions/<id>"
-        },        
+        },
         "Flights": {
             "create_flight ['POST']": "flights",
             "get_flight ['GET']": "flights/<id>",
@@ -39,7 +40,7 @@ def help_():
             "get_manufacturer ['GET']": "manufacturers/<id>",
             "get_manufacturers ['GET']": "manufacturers",
             "update_manufacturer ['PUT']": "manufacturers/<id>"
-        },        
+        },
         "Models": {
             "create_model ['POST']": "models",
             "get_model ['GET']": "models/<id>",
@@ -51,18 +52,18 @@ def help_():
             "get_parameter_value ['GET']": "parameter_values/<id>",
             "get_parameter_values ['GET']": "parameter_values",
             "update_parameter_value ['PUT']": "parameter_values/<id>"
-        },        
+        },
         "Parameters": {
             "create_parameter ['POST']": "parameters",
             "get_parameter ['GET']": "parameters/<id>",
             "get_parameters ['GET']": "parameters",
             "update_parameter ['PUT']": "parameters/<id>"
-        },        
+        },
         "Phases of flight": {
             "create_phase_of_flight ['POST']": "phases_of_flight",
             "get_phase_of_flight ['GET']": "phases_of_flight/<id>",
             "get_phases_of_flight ['GET']": "phases_of_flight",
             "update_phase_of_flight ['PUT']": "phases_of_flight/<id>"
-        }        
+        }
     }
     return jsonify(help_dict)

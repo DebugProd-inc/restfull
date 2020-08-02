@@ -1,6 +1,11 @@
-from flask import url_for, request, jsonify
+from flask import (
+    url_for,
+    request,
+    jsonify
+)
+
 from app import db
-from app.models.parameter_value import ParameterValue
+from app.all_models import ParameterValue
 from app.api import bp
 from app.api.errors import bad_request
 from app.api.auth import token_auth
@@ -14,8 +19,10 @@ def create_parameter_value():
             'time' not in data or \
             'value' not in data or \
             'id_flight' not in data:
-        return bad_request('must include id_parameter, \
-            time, value, id_flight fields')
+        return bad_request(
+            'must include id_parameter, '
+            + 'time, value, id_flight fields'
+        )
 
     parameter_value = ParameterValue()
     parameter_value.from_dict(data)

@@ -1,5 +1,6 @@
 from flask import request, jsonify
-from app.models.board import Board
+
+from app.all_models import Board
 from app.api import bp
 from app.api.auth import token_auth
 
