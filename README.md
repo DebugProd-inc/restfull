@@ -23,7 +23,7 @@
 ### Запуск приложения: 
 **1. Установить переменную среды FLASK_APP:** 
 * set FLASK_APP=restfull.py (для Windows)
-* export FLASK_APP=restfull.py (для Linux) 
+* export FLASK_APP=restfull.py (для Linux)  
 **2. Выполнить команду:** 
 * flask run
 * "hotReload": flask run --reload 
