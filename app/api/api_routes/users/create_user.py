@@ -1,9 +1,15 @@
-from flask import url_for, request, jsonify
+import json
+
+from flask import (
+    url_for,
+    request,
+    jsonify
+)
+
 from app import db
-from app.models.user import User
+from app.all_models import User
 from app.api import bp
 from app.api.errors import bad_request
-import json
 
 
 @bp.route('/users', methods=['POST'])
@@ -26,5 +32,3 @@ def create_user():
     response.status_code = 201
     response.headers['Location'] = url_for('api.create_user', id=user.id)
     return response
-
-    # https://debug-product-test.web.app/

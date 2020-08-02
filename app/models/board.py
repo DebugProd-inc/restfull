@@ -8,7 +8,7 @@ class Board(PaginatedAPIMixin, db.Model):
     id_model = db.Column(db.Integer, db.ForeignKey("model.id"))
     model = db.relationship("Model")
     year_of_manufacture = db.Column(db.Integer)
-    system = db.relationship("Subsystem")
+    subsystem = db.relationship("Subsystem")
     flight = db.relationship("Flight")
 
     def __repr__(self):

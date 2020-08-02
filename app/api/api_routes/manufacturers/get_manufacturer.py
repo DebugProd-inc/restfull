@@ -1,5 +1,6 @@
 from flask import jsonify
-from app.models.manufacturer import Manufacturer
+
+from app.all_models import Manufacturer
 from app.api import bp
 from app.api.auth import token_auth
 

@@ -1,5 +1,6 @@
 from flask import jsonify
-from app.models.flight import Flight
+
+from app.all_models import Flight
 from app.api import bp
 from app.api.auth import token_auth
 

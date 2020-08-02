@@ -1,3 +1,4 @@
+# Explicit is better than implicit :)
 from app.api.api_routes.load_files.download_file import download
 from app.api.api_routes.load_files.upload_file import upload
 from app.api.api_routes.load_files.uploaded_files import uploaded_files
@@ -58,5 +59,10 @@ from app.api.api_routes.phases_of_flight.get_phases_of_flight \
     import get_phases_of_flight
 from app.api.api_routes.phases_of_flight.update_phase_of_flight \
     import update_phase_of_flight
+
+from app.api.api_routes.subsystems.create_subsystem import create_subsystem
+from app.api.api_routes.subsystems.get_subsystem import get_subsystem
+from app.api.api_routes.subsystems.get_subsystems import get_subsystems
+from app.api.api_routes.subsystems.update_subsystem import update_subsystem
 
 from app.api.help import help_

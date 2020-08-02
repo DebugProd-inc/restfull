@@ -1,7 +1,10 @@
+from datetime import time
+from flask import url_for
 from app import db
+from app.models.utils.paginted_mixin import PaginatedAPIMixin
 
 
-class ParameterValue(db.Model):
+class ParameterValue(PaginatedAPIMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     id_parameter = db.Column(db.Integer, db.ForeignKey("parameter.id"))
     parameter = db.relationship("Parameter")
@@ -18,7 +21,7 @@ class ParameterValue(db.Model):
         data = {
             'id': self.id,
             'id_parameter': self.id_parameter,
-            'time': self.time,
+            'time': str(self.time),
             'value': self.value,
             'id_flight': self.id_flight,
             '_links': {
@@ -34,9 +37,13 @@ class ParameterValue(db.Model):
         for field in [
             'id',
             'id_parameter',
-            'time',
             'value',
             'id_flight'
         ]:
             if field in data:
-                setattr(self, field, data[field])           
+                setattr(self, field, data[field])
+
+        if 'time' in data:
+            hour, minute, second = [int(el) for el in data['time'].split(':')]
+            time_ = time(hour=hour, minute=minute, second=second)
+            setattr(self, 'time', time_)

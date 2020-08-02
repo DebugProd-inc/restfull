@@ -1,3 +1,4 @@
+from flask import url_for
 from app import db
 from app.models.duration_of_phase import duration_of_phase
 
@@ -5,7 +6,7 @@ from app.models.duration_of_phase import duration_of_phase
 class Flight(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     id_board = db.Column(
-        db.Integer,
+        db.String,
         db.ForeignKey("board.registration_number")
     )
     board = db.relationship("Board")
@@ -16,11 +17,11 @@ class Flight(db.Model):
     phase_of_flight = db.relationship(
         "PhaseOfFlight", secondary=duration_of_phase, back_populates="flight"
     )
-    parameter_value = db.relationship("ParameterValue")
+    parameter_value = db.relationship("ParameterValue")  # Тут это точно нужно?
 
     def __repr__(self):
         return f'<Flight {self.id} of id_board {self.id_board}>'
-    
+
     def to_dict(self):
         data = {
             'id': self.id,
@@ -47,4 +48,3 @@ class Flight(db.Model):
         ]:
             if field in data:
                 setattr(self, field, data[field])
-           

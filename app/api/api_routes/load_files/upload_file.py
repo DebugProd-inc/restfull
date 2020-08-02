@@ -1,5 +1,13 @@
-from flask import request, url_for, jsonify
-from flask_uploads import UploadSet, configure_uploads, DATA
+from flask import (
+    request,
+    url_for,
+    jsonify
+)
+from flask_uploads import (
+    UploadSet,
+    configure_uploads,
+    DATA
+)
 
 from app import app
 from app.api import bp

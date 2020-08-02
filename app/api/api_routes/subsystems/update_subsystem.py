@@ -1,17 +1,17 @@
 from flask import request, jsonify
 
 from app import db
-from app.all_models import Flight
+from app.all_models import Subsystem
 from app.api import bp
 from app.api.auth import token_auth
 from app.api.errors import bad_request
 
 
-@bp.route('/flights/<int:id>', methods=['PUT'])
+@bp.route('/subsystems/<int:id>', methods=['PUT'])
 @token_auth.login_required
-def update_flight(id):
-    flight = Flight.query.get_or_404(id)
+def update_subsystem(id):
+    subsystem = Subsystem.query.get_or_404(id)
     data = request.get_json() or {}
-    flight.from_dict(data)
+    subsystem.from_dict(data)
     db.session.commit()
-    return jsonify(flight.to_dict())
+    return jsonify(subsystem.to_dict())

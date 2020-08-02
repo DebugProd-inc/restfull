@@ -1,11 +1,12 @@
+from flask import url_for
 from app import db
 
 
 class Parameter(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, index=True)
-    id_system = db.Column(db.Integer, db.ForeignKey("subsystem.id"))
-    system = db.relationship("Subsystem")
+    id_subsystem = db.Column(db.Integer, db.ForeignKey("subsystem.id"))
+    subsystem = db.relationship("Subsystem")
     parameter_value = db.relationship("ParameterValue")
 
     def __repr__(self):
@@ -15,7 +16,7 @@ class Parameter(db.Model):
         data = {
             'id': self.id,
             'name': self.name,
-            'id_system': self.id_system,
+            'id_subsystem': self.id_subsystem,
             '_links': {
                 'self': url_for(
                     'api.get_parameter',
@@ -29,7 +30,7 @@ class Parameter(db.Model):
         for field in [
             'id',
             'name',
-            'id_system'
+            'id_subsystem'
         ]:
             if field in data:
                 setattr(self, field, data[field])
